@@ -1,0 +1,170 @@
+<div class="ui-fluid">
+  <div class="ui-g-2 ui-md-2" style="vertical-align: top; margin-top: -10px;">
+    <img src="assets/images/logoAlbo.png" width="150" />
+  </div>
+  <div
+    class="ui-g-8 ui-md-9"
+    style="text-align: center; vertical-align: top; margin-top: -10px;"
+  >
+    <h2>Directorio X</h2>
+  </div>
+  <div class="ui-g-2 ui-md-1">
+    <button
+      pButton
+      type="button"
+      (click)="visibleSidebar = true"
+      icon="pi pi-bars"
+      label="Menú"
+      class="ui-button-rounded ui-button-secondary"
+    ></button>
+  </div>
+</div>
+
+  <p-sidebar [(visible)]="visibleSidebar" position="top" [baseZIndex]="10000">
+      <div class="ui-rtl" dir="rtl">
+    <h1 style="font-weight:normal">Menú</h1>
+    <button
+      pButton
+      type="button"
+      (click)="confirmarActualizacion(); visibleSidebar = false"
+      pButton
+      icon="pi pi-info-circle"
+      label="Actualizar Datos"
+      class="ui-button-secondary"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      (click)="showBuscar(); visibleSidebar = false"
+      pButton
+      icon="pi pi-search"
+      label="Buscar"
+      class="ui-button-secondary"
+      style="margin-right: 15px"
+    ></button>
+  </div>
+  </p-sidebar>
+
+<p-confirmDialog
+  header="Confirmar Actualización"
+  icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
+
+<p-dialog
+  header="Documento"
+  [(visible)]="displayDialogDoc"
+  [contentStyle]="{ width: '100%', 'max-height': '75vh' }"
+  [positionTop]="30"
+  [positionLeft]="20"
+>
+  <pdf-viewer
+    [src]="pdfSrc"
+    [render-text]="true"
+    style="display: block;"
+    [fit-to-page]="true"
+  ></pdf-viewer>
+</p-dialog>
+
+<p-dialog
+  header="Archivos"
+  [(visible)]="displayDialog"
+  [contentStyle]="{ 'max-height': '400px' }"
+  [positionTop]="50"
+>
+  <div style="font-size: 12px;">
+    Click derecho en el archivo para ver opciones
+  </div>
+  <p-tree
+    [value]="filesTree2"
+    selectionMode="single"
+    [(selection)]="selectedFile2"
+    (onNodeContextMenuSelect)="nodeSelect($event)"
+    [contextMenu]="contextMenuGral"
+    [loading]="loading"
+    [emptyMessage]="cargando"
+  >
+  </p-tree>
+  <p-contextMenu
+    #contextMenuGral
+    appendTo="body"
+    [model]="itemsGral"
+  ></p-contextMenu>
+</p-dialog>
+
+<p-dialog
+  header="Buscar"
+  [(visible)]="displayDialogBuscar"
+  [modal]="true"
+  [positionTop]="20"
+  [contentStyle]="{ width: '95vw' }"
+>
+  <!-- <p-tree
+    [value]="filesTreeFull"
+    selectionMode="single"
+    [(selection)]="selectedFile2"
+    [filter]="true"
+    styleClass="arbolBuscar"
+    filterMode="strict"-->
+  <p-table
+    #dt
+    [value]="filesTreeFull"
+    [paginator]="true"
+    [rows]="6"
+    [globalFilterFields]="['label']"
+    [(contextMenuSelection)]="selectedFile2"
+    (onContextMenuSelect)="nodeSelectTable($event)"
+    [contextMenu]="contextMenuGral"
+  >
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input
+          type="text"
+          pInputText
+          size="50"
+          placeholder="Búsqueda de Archivo"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto"
+        />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 30%">Archivo</th>
+        <th>Ruta</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-file>
+      <tr [pContextMenuRow]="file">
+        <td>{{ file.label }}</td>
+        <td>{{ file.data }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-contextMenu
+    #contextMenuGral
+    appendTo="body"
+    [model]="itemsGral"
+  ></p-contextMenu>
+</p-dialog>
+
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-12">
+    <div
+      style="position: absolute; top: 60px; bottom: 0; left: 2px; right: 1px; overflow: hidden;"
+    >
+      <div id="scene" #scene style="margin-top: 200px">
+        <p-tree
+          [value]="filesTree"
+          layout="horizontal"
+          selectionMode="single"
+          [(selection)]="selectedFile"
+          (onNodeSelect)="nodeSelectArbol($event)"
+          [emptyMessage]="cargando"
+        >
+        </p-tree>
+      </div>
+    </div>
+  </div>
+</div>
