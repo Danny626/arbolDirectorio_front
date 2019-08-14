@@ -128,8 +128,6 @@ export class ArbolHorizontalComponent
     });
     this.loading = false;
 
-    // console.log(this.dataNodo);
-
     // inicio carga lazy
     // this.nodeService
     //   .getLazyFolders({ data: '\\\\192.168.200.96\\SGC_2', nivel: 0 })
@@ -198,7 +196,6 @@ export class ArbolHorizontalComponent
       this.nodeService
         .getLazyFolders({ data: event.node.data, nivel: 1 })
         .subscribe(nodes => {
-          // console.log(nodes);
           this.loading = true;
           event.node.children = nodes;
           // this.nodeService.getLazyFiles().then(nodes => event.node.children = nodes);
@@ -211,7 +208,6 @@ export class ArbolHorizontalComponent
     this.nodeService
       .getLazyFiles({ data: event.node.data, nivel: null })
       .subscribe(files => {
-        // console.log(files);
         this.loading = true;
         this.filesTree2 = files.data as TreeNode[];
         this.loading = false;
@@ -268,7 +264,6 @@ export class ArbolHorizontalComponent
     this.nodeService.getFileByte(file.data).subscribe(data => {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.pdfSrc = e.target.result; // base64
       };
       reader.readAsArrayBuffer(data);
@@ -284,7 +279,6 @@ export class ArbolHorizontalComponent
       a.href = url;
       a.download = `${file.label}`;
       a.click();
-      // console.log(url);
       return url;
     });
   }

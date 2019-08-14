@@ -1,27 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  TreeModule,
-  TabViewModule,
-  ScrollPanelModule,
-  DialogModule,
-  ButtonModule,
-  ConfirmDialogModule,
-  ContextMenuModule,
-  SidebarModule
-} from 'primeng/primeng';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService } from 'primeng/api';
-import {TableModule} from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
+import { TableModule } from 'primeng/table';
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     TreeModule,
-    TabViewModule,
     BrowserAnimationsModule,
-    ScrollPanelModule,
     DialogModule,
     ButtonModule,
     ConfirmDialogModule,
@@ -31,9 +23,7 @@ import {TableModule} from 'primeng/table';
   ],
   exports: [
     TreeModule,
-    TabViewModule,
     BrowserAnimationsModule,
-    ScrollPanelModule,
     DialogModule,
     ButtonModule,
     ConfirmDialogModule,
@@ -41,6 +31,6 @@ import {TableModule} from 'primeng/table';
     SidebarModule,
     TableModule
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService]
 })
 export class PrimengModule {}
